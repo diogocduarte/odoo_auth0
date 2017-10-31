@@ -34,7 +34,7 @@ def fragment_to_query_string(func):
 class Auth0OAuthLogin(OAuthLogin):
     def list_providers(self):
         # providers = super(Auth0OAuthLogin, self).list_providers()
-        providers = request.env['auth.oauth.provider.auth0'].sudo().search_read([('enabled', '=', True)])
+        providers = request.env['auth.oauth.provider'].sudo().search_read([('enabled', '=', True)])
 
         if providers:
             for provider in providers:

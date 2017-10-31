@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="data_auth0_auth0" model="auth.oauth.provider">
+            <field name="name">Auth0</field>
+            <field name="client_id">0</field>
+            <field name="client_secret">0</field>
+            <field name="enabled" eval="False"/>
+            <field name="body">Sign in with Auth0</field>
+            <field name="auth_endpoint">https://[your-auth0-domain]/authorize</field>
+            <field name="scope">openid profile</field>
+            <field name="validation_endpoint">https://[your-auth0-domain]/oauth/token</field>
+        </record>
+    </data>
+</odoo>

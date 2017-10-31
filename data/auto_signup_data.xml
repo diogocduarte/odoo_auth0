@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Allow external users to sign up -->
+        <function model="ir.config_parameter" name="set_param" eval="('auth_signup.allow_uninvited', False)"/>
+
+    </data>
+</odoo>

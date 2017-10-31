@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="view_auth0_form" model="ir.ui.view">
+            <field name="name">auth0.form</field>
+            <field name="model">auth.oauth.provider</field>
+            <field name="arch" type="xml">
+                <form string="arch">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="client_id" />
+                            <field name="client_secret" />
+                            <field name="enabled" />
+                            <field name="body" />
+                        </group>
+                        <group>
+                            <field name="auth_endpoint" />
+                            <field name="scope" />
+                            <field name="validation_endpoint" />
+                            <field name="data_endpoint" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>        
+        <record id="view_auth0_tree" model="ir.ui.view">
+            <field name="name">auth0.tree</field>
+            <field name="model">auth.oauth.provider</field>
+            <field name="arch" type="xml">
+                <tree string="arch">
+                    <field name="name" />
+                    <field name="client_id" />
+                    <field name="enabled" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_auth0" model="ir.actions.act_window">
+            <field name="name">Auth0</field>
+            <field name="res_model">auth.oauth.provider</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_auth0" name="Auth0"
+            parent="base.menu_users" sequence="30"
+            action="action_auth0" groups="base.group_no_one"/>
+</odoo>

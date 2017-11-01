@@ -10,6 +10,7 @@ class Auth0(models.Model):
     _inherit = 'auth.oauth.provider'
 
     client_secret = fields.Char(string=_('Client Secret'))
+    jwt_secret = fields.Char(string=_('JWT Secret'))
 
     def get_auth0_oauth_provider(self):
         return self.env['auth.oauth.provider'].sudo().search([

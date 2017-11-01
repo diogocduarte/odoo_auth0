@@ -10,6 +10,7 @@
                             <field name="name" />
                             <field name="client_id" />
                             <field name="client_secret" />
+                            <field name="jwt_secret" />
                             <field name="enabled" />
                             <field name="body" />
                         </group>

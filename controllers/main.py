@@ -42,14 +42,16 @@ class Auth0OAuthLogin(OAuthLogin):
 
         return providers
 
-    @http.route('/auth0/callback', type='http', auth='none')
+    @http.route('/auth0/callback', type='http', auth='public', website=True)
     def signin(self, **kw):
         # todo: instead of showing an error, generate new session data and redirect to Auth0
         if not request.session['auth0.nonce']:
             return werkzeug.utils.redirect('/web/login?err=Auth session expired - Try again', code=302)
         if request.params.get('state').replace('%7', '|') != request.session['auth0.nonce']:
             request.session['auth0.nonce'] = None
-            return 'State check failed (1). Try again.'
+            return request.render('website.http_error',
+                                  {'status_code': _('Bad Request'),
+                                   'status_message': _('State check failed (1). Try again.')})
         provider_id = request.session['auth0.nonce'].split('|')[1]
         if not request.params.get('code'):
             return 'Expected "code" param in URL, but its not there. Try again.'
@@ -67,10 +69,14 @@ class Auth0OAuthLogin(OAuthLogin):
         login = profile['email']
         password = self._ensure_password(login)
         if not password:
-            return 'You are not allowed access to this database (1)'
+            return request.render('website.http_error',
+                                  {'status_code': _('Bad Request'),
+                                   'status_message': _('You are not allowed access to this database (1)')})
         login_uid = request.session.authenticate(request.session['auth0.session_db'], login, password)
         if login_uid is False:
-            return 'You are not allowed access to this database (2)'
+            return request.render('website.http_error',
+                                  {'status_code': _('Bad Request'),
+                                   'status_message': _('You are not allowed access to this database (2)')})
 
         return set_cookie_and_redirect('/web')
 
@@ -158,7 +164,6 @@ class Auth0OAuthLogin(OAuthLogin):
         if not len(login):
             return False
         login = login[0]
-
         # generate a temporary hashed password and set it in the database
         tmp_password = '%032x' % random.getrandbits(128)
         # paradigm from odoo.addons.auth_crypt.models.res_users

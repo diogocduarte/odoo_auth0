@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="auth0_error" name="Sign up Error">
+            <t t-call="web.login_layout">
+                <div class="well well-lg"><span t-esc="error_message"/></div>
+            </t>
+    </template>
+
+</odoo>
